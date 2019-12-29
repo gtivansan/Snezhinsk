@@ -12,7 +12,7 @@
     <title>Снежинск</title>
 </head>
 <body>
-    <svg>
+    <svg width="0" height="0">
         <defs>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" enable-background="new 0 0 50 50" id="trashIcon"><path d="M20 18h2v16h-2z"/><path d="M24 18h2v16h-2z"/><path d="M28 18h2v16h-2z"/><path d="M12 12h26v2H12z"/><path d="M30 12h-2v-1c0-.6-.4-1-1-1h-4c-.6 0-1 .4-1 1v1h-2v-1c0-1.7 1.3-3 3-3h4c1.7 0 3 1.3 3 3v1z"/><path d="M31 40H19c-1.6 0-3-1.3-3.2-2.9l-1.8-24 2-.2 1.8 24c0 .6.6 1.1 1.2 1.1h12c.6 0 1.1-.5 1.2-1.1l1.8-24 2 .2-1.8 24C34 38.7 32.6 40 31 40z"/>
             </svg>
@@ -72,28 +72,67 @@
         </div>
         <div id="toolsBar">
             <h1>Tools</h1>
+            <div class="tools-group">
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>     
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>
+            </div>
+            <h1>Templates</h1>
+            <div class="tools-group">
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>     
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>
+                <div class="tool">
+                    <p class="in-work">In work</p>
+                </div>
+            </div>
         </div>
     </div>
     <script>
         let toolsCanvas = document.getElementById("tools");
         let flakerawCanvas = document.getElementById("flakeraw");
         let masksContainer = document.getElementById("masksContainer");
-
-        // let tool = new ToolChain(0, toolsCanvas, masksContainer);
-        let tools = [];
-        let activeLayerId = 0;
         let layersBar = document.getElementById("layersBar");
         let layersFooter = document.getElementById("layersFooter");
 
+        let tools = {};
+        let activeLayerId = 0;
+        let toolsCounter = 0;
+
         layersFooter.addEventListener("click", addLayer);
+        addLayer();
+
+        function layerOnclick(id, event) {
+            let layer = document.getElementById("layer_" + id);
+            if (["use", "svg"].includes(event.target.tagName)) {
+                deleteLayer(id);
+            } else {
+                activateLayer(id);
+            }
+        }
 
         function addLayer() {  
             let layer = document.createElement("div");
             layer.setAttribute("class", "layer");
-            layer.setAttribute("id", "layer_" + tools.length);
+            layer.setAttribute("id", "layer_" + toolsCounter);
             let layerId = document.createElement("span");
             layerId.setAttribute("class", "layer-id");
-            layerId.innerText = tools.length + 1;
+            layerId.innerText = toolsCounter + 1;
             let layerDel = document.createElementNS(svgNS, "svg");
             layerDel.setAttribute("width", "35");
             layerDel.setAttribute("height", "35");
@@ -104,27 +143,35 @@
             layer.appendChild(layerId);
             layer.appendChild(layerDel);
             layerDel.appendChild(use);
-            let id = tools.length
-            layer.addEventListener("click", (event) => activateLayer(id));
-            // layersBar.appendChild(layer);
+            let id = toolsCounter;
+            layer.addEventListener("click", (event) => layerOnclick(id, event));
             layersFooter.before(layer);
-
-            tools.push(new ToolChain(tools.length, toolsCanvas, masksContainer));
-            activateLayer(tools.length - 1);
+            tools[toolsCounter] = new ToolChain(toolsCounter, toolsCanvas, masksContainer);
+            activateLayer(toolsCounter);
+            toolsCounter += 1;
         }
 
         function activateLayer(id) {
             let activeLayer = document.getElementById("layer_" + activeLayerId);
-            activeLayer.classList.remove("layer-active");
+            if (activeLayer) {activeLayer.classList.remove("layer-active");}
             let newActiveLayer = document.getElementById("layer_" + id)
-            // console.log(id, newActiveLayer);
             newActiveLayer.classList.add("layer-active");
-            tools[activeLayerId].deactivate();
+            if (tools[activeLayerId]) {tools[activeLayerId].deactivate();}
             activeLayerId = id;
             tools[activeLayerId].activate();
         }
 
-        addLayer();
+        function deleteLayer(id) {
+            tools[id].delete();
+            delete tools[id];
+            if (activeLayerId == id) {
+                let newId = Object.keys(tools)[0];
+                if (newId) {activateLayer(newId);}
+                console.log(newId);
+            }
+            let layer = document.getElementById("layer_" + id);
+            layersBar.removeChild(layer);     
+        }
     </script>
 </body>
 </html>

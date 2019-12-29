@@ -206,6 +206,7 @@ class ToolChain {
     createMask() {
         let _this = this;
         let pathElem = addElement(this.masksContainer, "path", {d: this.calcPath()});
+        this.pathElem = pathElem;
         for (let point of this.points) {
             point.node.addEventListener("draggablepoint-move", (event) => {
                 setProperties(pathElem, {d: _this.calcPath()});
@@ -221,5 +222,11 @@ class ToolChain {
     activate() {
         this.isActive = true;
         this.shells.root.setAttribute("visibility", "visible");
+    }
+
+    delete() {
+        this.canvas.removeEventListener("mousedown", this.mousedownHandler);
+        if (this.pathElem) {this.masksContainer.removeChild(this.pathElem);}
+        this.canvas.removeChild(this.shells.root);
     }
 }
