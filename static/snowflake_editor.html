@@ -22,6 +22,23 @@
         <button id="ready">Готово!</button>
         <button id="help">?</button>
     </div>
+    <div id="readyPopup" style="display: none">
+        <div class="popup-back" id="readyPopupBack"></div>
+        <div class="popup-window" id="readyPopupWindow">
+            <h2>Подпишите вашу снежинку</h2>
+            <hr noshade color="#ceced8" size="1">
+            <svg width="300" height="300" viewbox="0 0 500 500">
+                <g filter="url(#blur)">
+                    <rect x="0" y="0" width="500" height="500" fill="grey" 
+                        mask="url(#flakeMask)" transform="translate(5, 5)"/>
+                </g>
+                <rect x="0" y="0" width="500" height="500" fill="#7373ff" mask="url(#flakeMask)"/>
+            </svg><br>
+            <input id="inputFlakeName">
+            <button id="inputSubmit">Отправить</button>
+            <button id="readyPopupClose" class="popup-close">x</button>
+        </div>
+    </div>
     <div id="canvasContainer">
         <svg id="flake">
             <clipPath id="masksContainer"></clipPath>
@@ -113,6 +130,11 @@
         let masksContainer = document.getElementById("masksContainer");
         let layersBar = document.getElementById("layersBar");
         let layersFooter = document.getElementById("layersFooter");
+        let readyButton = document.getElementById("ready");
+        let readyPopup = document.getElementById("readyPopup");
+        let readyCloseButton = document.getElementById("readyPopupClose");
+        let readyPopupWindow = document.getElementById("readyPopupWindow");
+        let readyPopupBack = document.getElementById("readyPopupBack");
 
         let tools = {};
         let activeLayerId = 0;
@@ -120,6 +142,8 @@
 
         layersFooter.addEventListener("click", addLayer);
         addLayer();
+        readyButton.addEventListener("click", showReadyPopup);
+        readyCloseButton.addEventListener("click", hideReadyPopup);
 
         function layerOnclick(id, event) {
             let layer = document.getElementById("layer_" + id);
@@ -175,6 +199,18 @@
             }
             let layer = document.getElementById("layer_" + id);
             layersBar.removeChild(layer);     
+        }
+
+        function showReadyPopup() {
+            readyPopup.style.display = "";
+            readyPopupWindow.classList.add("popup-window-animated");
+            readyPopupBack.classList.add("popup-back-animated");
+        }
+
+        function hideReadyPopup() {
+            readyPopup.style.display = "none";
+            readyPopupWindow.classList.remove("popup-window-animated");
+            readyPopupBack.classList.remove("popup-back-animated");
         }
     </script>
 </body>
