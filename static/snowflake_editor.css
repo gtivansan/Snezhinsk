@@ -3,15 +3,59 @@ body {
     display: flex;
     justify-content: flex-end;
     overflow: hidden;
+    background: url(background.jpg);
 } 
 
 .in-work {
-    font-size: 40px;
+    font-size: 25px;
     transform: rotate(-45deg);
     color: grey;
     font-family: 'Comfortaa';
-    padding-top: 10px;
+    padding-top: 30px;
 }
+
+/* HEADER STYLES */
+/*     START     */
+
+#header {
+    position: fixed;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#header button {
+    margin: 10px;
+    margin-top: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'Comfortaa';
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(0deg, #5454ef, #5d88ff);
+    border-radius: 15px;
+    border: 1px solid #5d88ff;
+}
+
+#header button:hover {
+    border: 1px solid #c6c6ff;
+}
+
+#header button:active {
+    background: linear-gradient(0deg, #5d88ff, #5454ef);
+}
+
+#header button:focus {
+    outline: none;
+}
+
+#header #help {
+    border-radius: 50%;
+} 
+
+/*      END      */
+/* HEADER STYLES */
 
 #flake {
     width: 500px;
@@ -68,6 +112,7 @@ body {
     margin: 10px;
     border: 1px solid black;
     border-radius: 10px;
+    background: white;
 }
 
 /*       END        */
