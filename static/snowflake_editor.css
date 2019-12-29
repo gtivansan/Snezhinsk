@@ -116,14 +116,27 @@ button.popup-close:active {
     background: #ff8a8a;
 }
 
-.popup-window-animated {
+.popup-window-animated{
     animation: popupAnimation 0.4s 1 ease-out;
     animation-delay: 0.3s;
     animation-fill-mode: backwards;
 }
 
-.popup-back-animated {
+.popup-window-reverse-animated{
+    animation: popupAnimation 0.4s 1 ease-out;
+    animation-fill-mode: forwards;
+    animation-direction: reverse;
+}
+
+.popup-back-animated{
     animation: popupBack 0.3s 1 ease-out;
+}
+
+.popup-back-reverse-animated{
+    animation-delay: 0.4s;
+    animation: popupBack 0.3s 1 ease-out;
+    animation-direction: reverse;
+    animation-fill-mode: forwards;
 }
 
 @keyframes popupAnimation {

@@ -144,6 +144,7 @@
         addLayer();
         readyButton.addEventListener("click", showReadyPopup);
         readyCloseButton.addEventListener("click", hideReadyPopup);
+        readyPopupBack.addEventListener("click", hideReadyPopup);
 
         function layerOnclick(id, event) {
             let layer = document.getElementById("layer_" + id);
@@ -208,9 +209,17 @@
         }
 
         function hideReadyPopup() {
-            readyPopup.style.display = "none";
             readyPopupWindow.classList.remove("popup-window-animated");
             readyPopupBack.classList.remove("popup-back-animated");
+            setTimeout(function() {
+                readyPopupWindow.classList.add("popup-window-reverse-animated");
+                readyPopupBack.classList.add("popup-back-reverse-animated");
+            }, 1);
+            setTimeout(function() {
+                readyPopup.style.display = "none";
+                readyPopupWindow.classList.remove("popup-window-reverse-animated");
+                readyPopupBack.classList.remove("popup-back-reverse-animated");
+            }, 700)
         }
     </script>
 </body>
