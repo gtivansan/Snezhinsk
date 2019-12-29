@@ -46,20 +46,24 @@
         <svg id="flake">
             <clipPath id="masksContainer"></clipPath>
             <symbol id="flakeraw">
-                <path d="M 134 450 L 250 249 L 366 450 Z"/>
+                <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
+                <path d="M 134.06 450 L 365 50 L 365 450 Z"/>
             </symbol>   
             <symbol id="flakeangle">
-                <use href="#flakeraw" fill="white" stroke-width="0" stroke="white"/>
-                <use clip-path="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="2" stroke="black"/>
+                <use href="#flakeraw" fill="white" stroke-width="2" stroke="white"/>
+                <use clip-path="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="6" stroke="black"/>
             </symbol>
-            <symbol id="flakeshape">
-                <rect x="0" y="0" width="500" height="500" fill="black"/>
-                <use href="#flakeangle" transform="rotate(0, 250 250)"/>
-                <use href="#flakeangle" transform="rotate(60, 250 250)"/>
-                <use href="#flakeangle" transform="rotate(120, 250 250)"/>
-                <use href="#flakeangle" transform="rotate(180, 250 250)"/>
-                <use href="#flakeangle" transform="rotate(240, 250 250)"/>
-                <use href="#flakeangle" transform="rotate(300, 250 250)"/>
+            <symbol id="flakeshape" viewbox="-100 -350 1000 850">
+                <rect x="0" y="0" width="2000" height="2000" fill="black"/>
+                <g id="left">
+                    <use href="#flakeangle" transform="rotate(0, 365 50)"/>
+                    <use href="#flakeangle" transform="rotate(60, 365 50)"/>
+                    <use href="#flakeangle" transform="rotate(120, 365 50)"/>
+                    <use href="#flakeangle" transform="rotate(180, 365 50)"/>
+                    <use href="#flakeangle" transform="rotate(240, 365 50)"/>
+                    <use href="#flakeangle" transform="rotate(300, 365 50)"/>
+                </g>
+                <use href="#left" transform="scale(-1, 1)" x="-730">
             </symbol>
             <mask id="flakeMask">
                 <use href="#flakeshape"/>
