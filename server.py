@@ -17,6 +17,7 @@ class Handler(BaseHTTPRequestHandler):
             mimetypes = {
                 "html" : "text/html",
                 "js"   : "application/javascript",
+                "css"  : "text/css"
             }
             mimetype = mimetypes.get(self.path.split('.')[-1])
 

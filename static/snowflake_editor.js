@@ -113,6 +113,7 @@ class ToolChain {
         this.id = id;
 
         this.isDrag = false;
+        this.isActive = true;
         this.r = 10
         this.points = [];
 
@@ -123,7 +124,7 @@ class ToolChain {
 
         let _this = this;
         this.mousedownHandler = (event) => {
-            if (!_this.isDrag) {
+            if (!_this.isDrag && event.which == 1 && _this.isActive) {
                 _this.addPoint({
                     x: event.pageX - getCoords(_this.canvas).x, 
                     y: event.pageY - getCoords(_this.canvas).y
@@ -144,7 +145,8 @@ class ToolChain {
     }
 
     addPoint(position) {
-        let point = new DraggablePoint(this.canvas, this.shells.points, position, {r: this.r})
+        position = this.positionModifier()(position);
+        let point = new DraggablePoint(this.canvas, this.shells.points, position, {r: this.r}, {fill: "grey"})
         point.node.addEventListener("draggablepoint-dragstart", (event) => this.isDrag += 1);
         point.node.addEventListener("draggablepoint-dragend", (event) => this.isDrag -= 1);
         point.positionModifier = this.positionModifier();
@@ -158,7 +160,7 @@ class ToolChain {
                 y2: point.position.y,
                 x1: prePoint.position.x,
                 y1: prePoint.position.y,
-                stroke: "black"
+                stroke: "grey"
             });
             point.node.addEventListener("draggablepoint-move", 
                 (event) => setProperties(segment, {x2: event.detail.x, y2: event.detail.y}));
@@ -177,7 +179,7 @@ class ToolChain {
                 y2: point.position.y,
                 x1: prePoint.position.x,
                 y1: prePoint.position.y,
-                stroke: "black"
+                stroke: "grey"
             });
             point.node.addEventListener("draggablepoint-move", 
                 (event) => setProperties(segment, {x2: event.detail.x, y2: event.detail.y}));
@@ -211,11 +213,13 @@ class ToolChain {
         }
     }
 
-    hide() {
+    deactivate() {
+        this.isActive = false;
         this.shells.root.setAttribute("visibility", "hidden");
     }
 
-    show() {
+    activate() {
+        this.isActive = true;
         this.shells.root.setAttribute("visibility", "visible");
     }
 }
