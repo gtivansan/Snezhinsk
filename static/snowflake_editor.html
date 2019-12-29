@@ -34,10 +34,13 @@
                 </g>
                 <rect x="0" y="0" width="500" height="500" fill="#7373ff" mask="url(#flakeMask)"/>
             </svg><br>
-            <input id="inputFlakeName">
-            <button id="inputSubmit">Отправить</button>
+            <input id="inputSignature">
+            <button id="submitButton">Отправить</button>
             <button id="readyPopupClose" class="popup-close">x</button>
         </div>
+    </div>
+    <div>
+        <!-- <div class="popup-back"></div> -->
     </div>
     <div id="canvasContainer">
         <svg id="flake">
@@ -135,16 +138,19 @@
         let readyCloseButton = document.getElementById("readyPopupClose");
         let readyPopupWindow = document.getElementById("readyPopupWindow");
         let readyPopupBack = document.getElementById("readyPopupBack");
+        let inputSignature = document.getElementById("inputSignature");
 
         let tools = {};
         let activeLayerId = 0;
         let toolsCounter = 0;
 
         layersFooter.addEventListener("click", addLayer);
-        addLayer();
         readyButton.addEventListener("click", showReadyPopup);
         readyCloseButton.addEventListener("click", hideReadyPopup);
         readyPopupBack.addEventListener("click", hideReadyPopup);
+        submitButton.addEventListener('click', () => submit(inputSignature.value));
+
+        addLayer();
 
         function layerOnclick(id, event) {
             let layer = document.getElementById("layer_" + id);
@@ -220,6 +226,26 @@
                 readyPopupWindow.classList.remove("popup-window-reverse-animated");
                 readyPopupBack.classList.remove("popup-back-reverse-animated");
             }, 700)
+        }
+
+        async function submit(signature) {
+            console.log("submited");
+            let data = masksContainer.innerHTML;
+            let sendObject = {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8",
+                },
+                body: JSON.stringify({data, signature})
+            };
+            await fetch("addFlake", sendObject).then(submitSuccess).catch(err => submitError());
+        }
+
+        function submitSuccess() {
+
+        }
+
+        function submitError() {
         }
     </script>
 </body>

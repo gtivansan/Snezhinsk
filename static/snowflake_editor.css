@@ -141,7 +141,7 @@ button.popup-close:active {
 
 @keyframes popupAnimation {
     from {
-        top: -30px;
+        top: -40px;
         opacity: 0;
     }
     to {
