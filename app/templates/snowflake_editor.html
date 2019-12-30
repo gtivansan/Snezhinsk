@@ -54,51 +54,84 @@
             <button id="errorPopupClose" class="popup-close" onclick="hideErrorPopup();">x</button>
         </div>
     </div>
+    <svg viewBox="0 0 500 500" width="0" height="0">
+        <clipPath id="masksContainer"></clipPath>
+        <symbol id="flakeraw">
+            <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
+            <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
+        </symbol>   
+        <symbol id="flakeangle">
+            <use href="#flakeraw" fill="white" stroke-width="2" stroke="white"/>
+            <use clip-path="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="6" stroke="black"/>
+        </symbol>
+        <symbol id="flakeshape" viewbox="-230 -350 1000 850">
+            <rect x="0" y="0" width="2000" height="2000" fill="black"/>
+            <g id="left">
+                <use href="#flakeangle" transform="rotate(0, 265 50)"/>
+                <use href="#flakeangle" transform="rotate(60, 265 50)"/>
+                <use href="#flakeangle" transform="rotate(120, 265 50)"/>
+                <use href="#flakeangle" transform="rotate(180, 265 50)"/>
+                <use href="#flakeangle" transform="rotate(240, 265 50)"/>
+                <use href="#flakeangle" transform="rotate(300, 265 50)"/>
+            </g>
+            <use href="#left" transform="scale(-1, 1)" x="-530">
+        </symbol>
+        <mask id="flakeMask">
+            <use href="#flakeshape"/>
+        </mask>
+        <mask id="flakeangleMask">
+            <rect x="0" y="0" width="500" height="500" fill="black"/>
+            <use href="#flakeangle"/>
+        </mask>
+        <filter id="blur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+        </filter>
+    </svg>
     <div id="canvasContainer">
         <svg id="flake">
-            <clipPath id="masksContainer"></clipPath>
-            <symbol id="flakeraw">
+            <clipPath id="_masksContainer"></clipPath>
+            <symbol id="_flakeraw">
                 <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
                 <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
             </symbol>   
-            <symbol id="flakeangle">
-                <use href="#flakeraw" fill="white" stroke-width="2" stroke="white"/>
-                <use clip-path="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="6" stroke="black"/>
+            <symbol id="_flakeangle">
+                <use href="#_flakeraw" fill="white" stroke-width="2" stroke="white"/>
+                <use clip-path="url(#_masksContainer)" href="#_flakeraw" fill="black" stroke-width="6" stroke="black"/>
             </symbol>
-            <symbol id="flakeshape" viewbox="-230 -350 1000 850">
+            <symbol id="_flakeshape" viewbox="-230 -350 1000 850">
                 <rect x="0" y="0" width="2000" height="2000" fill="black"/>
-                <g id="left">
-                    <use href="#flakeangle" transform="rotate(0, 265 50)"/>
-                    <use href="#flakeangle" transform="rotate(60, 265 50)"/>
-                    <use href="#flakeangle" transform="rotate(120, 265 50)"/>
-                    <use href="#flakeangle" transform="rotate(180, 265 50)"/>
-                    <use href="#flakeangle" transform="rotate(240, 265 50)"/>
-                    <use href="#flakeangle" transform="rotate(300, 265 50)"/>
+                <g id="_left">
+                    <use href="#_flakeangle" transform="rotate(0, 265 50)"/>
+                    <use href="#_flakeangle" transform="rotate(60, 265 50)"/>
+                    <use href="#_flakeangle" transform="rotate(120, 265 50)"/>
+                    <use href="#_flakeangle" transform="rotate(180, 265 50)"/>
+                    <use href="#_flakeangle" transform="rotate(240, 265 50)"/>
+                    <use href="#_flakeangle" transform="rotate(300, 265 50)"/>
                 </g>
-                <use href="#left" transform="scale(-1, 1)" x="-530">
+                <use href="#_left" transform="scale(-1, 1)" x="-530">
             </symbol>
-            <mask id="flakeMask">
-                <use href="#flakeshape"/>
+            <mask id="_flakeMask">
+                <use href="#_flakeshape"/>
             </mask>
-            <mask id="flakeangleMask">
+            <mask id="_flakeangleMask">
                 <rect x="0" y="0" width="500" height="500" fill="black"/>
-                <use href="#flakeangle"/>
+                <use href="#_flakeangle"/>
             </mask>
-            <filter id="blur">
+            <filter id="_blur">
                 <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
             </filter>
-            <g filter="url(#blur)">
+            <g filter="url(#_blur)">
                 <rect x="0" y="0" width="10000" height="500" fill="grey" 
-                    mask="url(#flakeMask)" transform="translate(5, 5)"/>
+                    mask="url(#_flakeMask)" transform="translate(5, 5)"/>
             </g>
-            <rect x="0" y="0" width="10000" height="500" fill="#7373ff" mask="url(#flakeMask)"/>
+            <rect x="0" y="0" width="10000" height="500" fill="#7373ff" mask="url(#_flakeMask)"/>
         </svg>
         <svg id="tools">
-            <g filter="url(#blur)">
+            <g filter="url(#_blur)">
                 <rect x="0" y="0" width="300" height="500" fill="grey" 
-                    mask="url(#flakeangleMask)" transform="translate(5, 5)"/>
+                    mask="url(#_flakeangleMask)" transform="translate(5, 5)"/>
             </g>
-            <rect x="0" y="0" width="300" height="500" fill="#7373ff" mask="url(#flakeangleMask)"/>
+            <rect x="0" y="0" width="300" height="500" fill="#7373ff" mask="url(#_flakeangleMask)"/>
         </svg>
     </div>
     <div id="toolsBox">
