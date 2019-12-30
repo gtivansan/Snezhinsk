@@ -89,14 +89,13 @@
     </svg>
     <div id="canvasContainer">
         <svg id="flake">
-            <clipPath id="_masksContainer"></clipPath>
             <symbol id="_flakeraw">
                 <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
                 <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
             </symbol>   
             <symbol id="_flakeangle">
                 <use href="#_flakeraw" fill="white" stroke-width="2" stroke="white"/>
-                <use clip-path="url(#_masksContainer)" href="#_flakeraw" fill="black" stroke-width="6" stroke="black"/>
+                <use clip-path="url(#masksContainer)" href="#_flakeraw" fill="black" stroke-width="6" stroke="black"/>
             </symbol>
             <symbol id="_flakeshape" viewbox="-230 -350 1000 850">
                 <rect x="0" y="0" width="2000" height="2000" fill="black"/>
