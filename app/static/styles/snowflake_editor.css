@@ -6,6 +6,8 @@ body {
     background: url(background.jpg);
 } 
 
+
+
 .in-work {
     font-size: 25px;
     transform: rotate(-45deg);
@@ -139,13 +141,19 @@ button.popup-close:active {
 }
 
 #flake {
-    width: 500px;
+    flex-grow: 3;
     height: 500px;
 }
 
 #tools {
-    width: 300px;
+    flex-grow: 1;
     height: 500px;
+}
+
+@media (max-width: 1370px) {
+    #flake {
+        flex-grow: 20;
+    }
 }
 
 #canvasContainer {
@@ -191,6 +199,22 @@ button.popup-close:active {
     border: 1px solid black;
     border-radius: 10px;
     background: white;
+}
+
+@media (max-height: 850px) {
+    #toolsBar {
+        min-width: 290px;
+        width: 290px;
+    }
+
+    #toolsBar .tool {
+        width: 120px;
+        height: 120px;
+    }
+
+    body {
+        background: url("background2.jpg")
+    }
 }
 
 #layersBar {
