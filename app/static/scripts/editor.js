@@ -10,8 +10,6 @@ let readyPopupWindow = document.getElementById("readyPopupWindow");
 let readyPopupBack = document.getElementById("readyPopupBack");
 let inputSignature = document.getElementById("inputSignature");
 
-
-
 let tools = {};
 let activeLayerId = 0;
 let toolsCounter = 0;

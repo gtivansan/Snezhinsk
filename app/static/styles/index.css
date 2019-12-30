@@ -1,0 +1,48 @@
+body {
+	margin: 0;
+    background: url(background.jpg);
+    height: 99vh;
+}
+
+p {
+	line-height: 1.4;
+	text-align: justify;
+}
+
+.greeting {
+	position: fixed;
+	width: 800px;
+	left: 0;
+	right: 0;
+	margin: auto;
+	font-family: 'Comfortaa';
+	font-size: 22px;
+	color: #000054;
+}
+
+.button {
+    margin: 10px;
+    margin-top: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: 'Comfortaa';
+    font-size: 20px;
+    color: white;
+    background: linear-gradient(0deg, #5454ef, #5d88ff);
+    border-radius: 15px;
+    border: 1px solid #5d88ff;
+    text-decoration: none;
+}
+
+.button:hover {
+    border: 1px solid #c6c6ff;
+}
+
+.button:active {
+    background: linear-gradient(0deg, #5d88ff, #5454ef);
+}
+
+.button:focus {
+    outline: none;
+}

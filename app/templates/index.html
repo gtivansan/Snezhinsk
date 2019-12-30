@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
+
+    <title>Снежинск</title>
 </head>
 <body>
-    <a href="/editor">Редактор снежинок</a>
+    <div class="greeting">
+        <p style="text-align: center;">
+            Привет!
+        </p>
+        <p>
+            В этом году было очень мало снега, не находишь? А что, если я тебе 
+            скажу, как это можно исправить? Не веришь? Слушай внимательнее.
+            Нажимай на <a class="button" href="/editor">ЭТУ</a> кнопку и вырезай снежинку. А лучше
+            две или три. Чем больше, тем лучше будет наш чудесный новогодний 
+            снегопад!
+        </p>
+        <p style="text-align: center;">
+            C Новым Годом!
+        </p>
+    </div>
+    <svg width="100%" height="100%">
+    </svg>
 </body>
 </html>
