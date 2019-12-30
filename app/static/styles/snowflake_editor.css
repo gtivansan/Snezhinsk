@@ -201,22 +201,6 @@ button.popup-close:active {
     background: white;
 }
 
-@media (max-height: 850px) {
-    #toolsBar {
-        min-width: 290px;
-        width: 290px;
-    }
-
-    #toolsBar .tool {
-        width: 120px;
-        height: 120px;
-    }
-
-    body {
-        background: url("background2.jpg")
-    }
-}
-
 #layersBar {
     width: 100px;
     min-width: 100px;
@@ -298,4 +282,64 @@ button.popup-close:active {
 
 #layersBar .layer-active .layer-id {
     color: white;
+}
+
+@media (max-height: 850px) {
+    #toolsBar {
+        min-width: 290px;
+        width: 290px;
+    }
+
+    #toolsBar .tool {
+        width: 120px;
+        height: 120px;
+    }
+
+    .in-work {
+        font-size: 22px;
+        margin-top: 10px;
+    }
+
+    body {
+        background: url("background2.jpg")
+    }
+}
+
+@media (max-height: 730px) {
+    #toolsBar {
+        min-width: 250px;
+        width: 250px;
+    }
+
+    #toolsBar .tool {
+        width: 100px;
+        height: 100px;
+        margin: 5px;
+    }
+
+    .in-work {
+        font-size: 17px;
+        margin-top: 5px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    body {
+        background: url("background3.jpg")
+    }
+
+    #layersBar .layer {
+        height: 30px;
+    }
+
+    #layersBar {
+        width: 80px;
+        min-width: 80px;
+    }
+
+    #flake {
+        flex-grow: 3;
+    }
 }

@@ -1,5 +1,5 @@
 from app import app
 
-PORT_NUMBER = 1004
+PORT_NUMBER = 5004
 
-app.run(port = PORT_NUMBER)
+app.run(host="0.0.0.0", port = PORT_NUMBER)
