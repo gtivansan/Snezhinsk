@@ -3,12 +3,14 @@ let flakerawCanvas = document.getElementById("flakeraw");
 let masksContainer = document.getElementById("masksContainer");
 let layersBar = document.getElementById("layersBar");
 let layersFooter = document.getElementById("layersFooter");
+
 let readyButton = document.getElementById("ready");
 let readyPopup = document.getElementById("readyPopup");
-let readyCloseButton = document.getElementById("readyPopupClose");
 let readyPopupWindow = document.getElementById("readyPopupWindow");
 let readyPopupBack = document.getElementById("readyPopupBack");
 let inputSignature = document.getElementById("inputSignature");
+
+
 
 let tools = {};
 let activeLayerId = 0;
@@ -16,7 +18,6 @@ let toolsCounter = 0;
 
 layersFooter.addEventListener("click", addLayer);
 readyButton.addEventListener("click", showReadyPopup);
-readyCloseButton.addEventListener("click", hideReadyPopup);
 readyPopupBack.addEventListener("click", hideReadyPopup);
 submitButton.addEventListener('click', () => submit(inputSignature.value));
 
@@ -122,23 +123,54 @@ function popupDraw(popupWindow, popupBack) {
     }
 }
 
-function showReadyPopup() {
-    readyPopup.style.display = "";
+function showPopup(popup, popupWindow, popupBack) {
+    popup.style.display = "";
     animate({
         timing: linear,
-        draw: popupDraw(readyPopupWindow, readyPopupBack),
+        draw: popupDraw(popupWindow, popupBack),
         duration: 300,
-    })
+    });
+}
+
+function hidePopup(popup, popupWindow, popupBack) {
+    animate({
+        timing: reverse(linear),
+        draw: popupDraw(popupWindow, popupBack),
+        duration: 300,
+        then: () => {popup.style.display = "none";}
+    });
+}
+
+function showReadyPopup() {
+    showPopup(readyPopup, readyPopupWindow, readyPopupBack);
 }
 
 function hideReadyPopup() {
-    animate({
-        timing: reverse(linear),
-        draw: popupDraw(readyPopupWindow, readyPopupBack),
-        duration: 300,
-        then: () => {readyPopup.style.display = "none";}
-    })
+    hidePopup(readyPopup, readyPopupWindow, readyPopupBack);
 }
+
+let successPopup = document.getElementById("successPopup");
+let successPopupWindow = document.getElementById("successPopupWindow");
+let successPopupBack = document.getElementById("successPopupBack");
+let successCloseButton = document.getElementById("successPopupClose");
+function showSuccessPopup() {
+    showPopup(successPopup, successPopupWindow, successPopupBack);
+}
+function hideSuccessPopup() {
+    hidePopup(successPopup, successPopupWindow, successPopupBack)
+}
+
+let errorPopup = document.getElementById("errorPopup");
+let errorPopupWindow = document.getElementById("errorPopupWindow");
+let errorPopupBack = document.getElementById("errorPopupBack");
+let errorCloseButton = document.getElementById("errorPopupClose");
+function showErrorPopup() {
+    showPopup(errorPopup, errorPopupWindow, errorPopupBack);
+}
+function hideErrorPopup() {
+    hidePopup(errorPopup, errorPopupWindow, errorPopupBack)
+}
+
 
 async function submit(signature) {
     console.log("submit")
@@ -154,8 +186,11 @@ async function submit(signature) {
 }
 
 function submitSuccess() {
+    hideReadyPopup();
+    showSuccessPopup();
 }
 
 function submitError() {
-    hideReadyPopup()
+    hideReadyPopup();
+    showErrorPopup();
 }

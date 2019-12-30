@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/snowflake_editor.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 
-    <title>Снежинск</title>
+    <title>Редактор снежинок</title>
 </head>
 <body>
     <svg width="0" height="0">
@@ -33,11 +33,26 @@
             </svg><br>
             <input id="inputSignature">
             <button id="submitButton">Отправить</button>
-            <button id="readyPopupClose" class="popup-close">x</button>
+            <button id="readyPopupClose" class="popup-close" onclick="hideReadyPopup();">x</button>
         </div>
     </div>
-    <div>
-        <!-- <div class="popup-back"></div> -->
+    <div id="successPopup" style="display: none">
+        <div class="popup-back" id="successPopupBack"></div>
+        <div class="popup-window" id="successPopupWindow">
+            <h2>Класс!</h2>
+            <h2>Ищи свою снежинку в <a href="/">снегопаде</a>.</h2><br>
+            <button onclick="hideSuccessPopup();"> Хорошо!</button>
+            <button id="successPopupClose" class="popup-close" onclick="hideSuccessPopup();">x</button>
+        </div>
+    </div>
+    <div id="errorPopup" style="display: none">
+        <div class="popup-back" id="errorPopupBack"></div>
+        <div class="popup-window" id="errorPopupWindow">
+            <h2>Ой!</h2>
+            <h2>Кажется твоя снежинка потерялась(</h2><br>
+            <button onclick="hideErrorPopup();"> Хорошо!</button>
+            <button id="errorPopupClose" class="popup-close" onclick="hideErrorPopup();">x</button>
+        </div>
     </div>
     <div id="canvasContainer">
         <svg id="flake">
@@ -131,6 +146,6 @@
 
     <script src="{{ url_for('static', filename='scripts/tools.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/editor.js') }}"></script>
-    
+
 </body>
 </html>

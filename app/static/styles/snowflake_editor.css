@@ -84,6 +84,16 @@ input {
     height: 500px;
 }
 
+#successPopup .popup-window {
+    width: 400px;
+    height: 250px;
+}
+
+#errorPopup .popup-window {
+    width: 400px;
+    height: 250px;
+}
+
 .popup-back {
     background: #0000004a;
     position: fixed;
