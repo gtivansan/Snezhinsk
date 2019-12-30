@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, request
+from flask import render_template, request, make_response
 
 @app.route('/')
 @app.route("/index")
@@ -15,4 +15,4 @@ def send_flake():
     signature = request.form.get("signature")
     snowflake = request.form.get("snowflake")
     db.addSnowflake(signature, snowflake)
-    return ""
+    return make_response("ok", 200)

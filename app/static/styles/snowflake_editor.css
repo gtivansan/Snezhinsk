@@ -128,33 +128,6 @@ button.popup-close:active {
     animation-direction: reverse;
 }
 
-.popup-back-animated{
-    animation: popupBack 0.3s 1 ease-out;
-}
-
-.popup-back-reverse-animated{
-    animation-delay: 0.4s;
-    animation: popupBack 0.3s 1 ease-out;
-    animation-direction: reverse;
-    animation-fill-mode: forwards;
-}
-
-@keyframes popupAnimation {
-    from {
-        top: -40px;
-        opacity: 0;
-    }
-    to {
-        top: 0;
-        opacity: 1;
-    }
-}
-
-@keyframes popupBack {
-    from {opacity: 0}
-    to {opacity: 1}
-}
-
 #flake {
     width: 500px;
     height: 500px;

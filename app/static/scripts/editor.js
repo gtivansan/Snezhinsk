@@ -78,27 +78,70 @@ function deleteLayer(id) {
     layersBar.removeChild(layer);     
 }
 
+function animate({timing, draw, duration, then}) {
+    // Taken from http://learn.javascript.ru
+    let start = performance.now();
+    requestAnimationFrame(function animate(time) {
+        // timeFraction изменяется от 0 до 1
+        let timeFraction = (time - start) / duration;
+        if (timeFraction > 1) timeFraction = 1;
+
+        // вычисление текущего состояния анимации
+        let progress = timing(timeFraction);
+
+        draw(progress); // отрисовать её
+
+        if (timeFraction < 1) {
+          requestAnimationFrame(animate);
+        } else {
+            if (then) {then();}
+        }
+    });
+}
+
+function linear(timeFraction) {
+    return timeFraction;
+}
+
+function reverse(timing) {
+    return function(timeFraction) {
+        return timing(1 - timeFraction);
+    }
+}
+
+function popupDraw(popupWindow, popupBack) {
+    return function(progress) {
+        if (progress > 0.5) {
+            popupWindow.style.top = `${-20 * (2 - progress * 2)}px`;
+            popupWindow.style.opacity = 2 * progress - 1;
+        }
+        if (progress < 0.5) {
+            popupWindow.style.opacity = 0;
+            popupBack.style.opacity = 2 * progress;
+        }
+    }
+}
+
 function showReadyPopup() {
     readyPopup.style.display = "";
-    readyPopupWindow.classList.add("popup-window-animated");
-    readyPopupBack.classList.add("popup-back-animated");
+    animate({
+        timing: linear,
+        draw: popupDraw(readyPopupWindow, readyPopupBack),
+        duration: 300,
+    })
 }
 
 function hideReadyPopup() {
-    readyPopupWindow.classList.remove("popup-window-animated");
-    readyPopupBack.classList.remove("popup-back-animated");
-    setTimeout(function() {
-        readyPopupWindow.classList.add("popup-window-reverse-animated");
-        readyPopupBack.classList.add("popup-back-reverse-animated");
-    }, 1);
-    setTimeout(function() {
-        readyPopup.style.display = "none";
-        readyPopupWindow.classList.remove("popup-window-reverse-animated");
-        readyPopupBack.classList.remove("popup-back-reverse-animated");
-    }, 700)
+    animate({
+        timing: reverse(linear),
+        draw: popupDraw(readyPopupWindow, readyPopupBack),
+        duration: 300,
+        then: () => {readyPopup.style.display = "none";}
+    })
 }
 
 async function submit(signature) {
+    console.log("submit")
     let flakeSVG = masksContainer.innerHTML;
     let formData = new FormData();
     formData.append("signature", signature);
@@ -111,8 +154,8 @@ async function submit(signature) {
 }
 
 function submitSuccess() {
-
 }
 
 function submitError() {
+    hideReadyPopup()
 }
