@@ -29,6 +29,13 @@ class Snowflake:
         self.signature = signature
         self.snowflake = snowflake
 
+    def toDict(self):
+        return {
+            "id": self.id,
+            "signature": self.signature,
+            "snowflake": self.snowflake
+        }
+
     def __str__(self):
         return f"Snowflake\nid: {self.id};\nsignature: {self.signature};\nsnowflake: {self.snowflake}"
 
@@ -49,7 +56,6 @@ class Database:
     def getSnowflake(self, id):
         with Connection() as cursor:
             data = cursor().execute('''SELECT * FROM snowflakes WHERE id=?''', [id]).fetchone()
-            print(data)
             if data is None:
                 return None
             else:

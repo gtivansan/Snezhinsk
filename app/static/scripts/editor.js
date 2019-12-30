@@ -180,7 +180,7 @@ async function submit(signature) {
         method: "POST",
         body: formData
     };
-    await fetch("send_flake", sendObject).then(submitSuccess).catch(err => submitError());
+    await fetch("sendSnowflake", sendObject).then(submitSuccess).catch(err => submitError());
 }
 
 function submitSuccess() {
