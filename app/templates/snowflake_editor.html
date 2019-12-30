@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="static/fly.js"></script>
-    <script src="static/snowflake_editor.js"></script>
+    {# <script src="static/snowflake_editor.js"></script> #}
+    <script src="{{ url_for('static', filename='scripts/snowflake_editor.js') }}"></script>
 
-    <link rel="stylesheet" href="static/snowflake_editor.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/snowflake_editor.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Comfortaa&display=swap" rel="stylesheet">
 
     <title>Снежинск</title>
@@ -233,16 +233,15 @@
         }
 
         async function submit(signature) {
-            console.log("submited");
-            let data = masksContainer.innerHTML;
+            let flakeSVG = masksContainer.innerHTML;
+            let formData = new FormData();
+            formData.append("signature", signature);
+            formData.append("snowflake", flakeSVG);
             let sendObject = {
-                method: 'post',
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8",
-                },
-                body: JSON.stringify({data, signature})
+                method: "POST",
+                body: formData
             };
-            await fetch("addFlake", sendObject).then(submitSuccess).catch(err => submitError());
+            await fetch("send_flake", sendObject).then(submitSuccess).catch(err => submitError());
         }
 
         function submitSuccess() {

@@ -147,8 +147,8 @@ class ToolChain {
     addPoint(position) {
         position = this.positionModifier()(position);
         let point = new DraggablePoint(this.canvas, this.shells.points, position, {r: this.r}, {fill: "grey"})
-        point.node.addEventListener("draggablepoint-dragstart", (event) => this.isDrag += 1);
-        point.node.addEventListener("draggablepoint-dragend", (event) => this.isDrag -= 1);
+        point.node.addEventListener("draggablepoint-dragstart", (event) => this.isDrag = 1);
+        point.node.addEventListener("draggablepoint-dragend", (event) => this.isDrag = 0);
         point.positionModifier = this.positionModifier();
 
         this.points.push(point);
