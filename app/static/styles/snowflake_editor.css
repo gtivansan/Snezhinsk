@@ -307,8 +307,8 @@ button.popup-close:active {
 
 @media (max-height: 730px) {
     #toolsBar {
-        min-width: 250px;
-        width: 250px;
+        min-width: 270px;
+        width: 270px;
     }
 
     #toolsBar .tool {
