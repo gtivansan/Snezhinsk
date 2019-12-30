@@ -52,6 +52,7 @@ class DraggablePoint {
             y: event.pageY
         };
         _this.startPointPosition = _this.position;
+        document.body.setAttribute("onselectstart", "return false");
 
         let mousemoveHandler =  (event) => _this.mousemove(_this, event);
         document.addEventListener("mousemove", mousemoveHandler);        
@@ -65,6 +66,7 @@ class DraggablePoint {
 
     mouseup(_this, event, mousemoveHandler) {
         document.removeEventListener("mousemove", mousemoveHandler);
+        document.body.removeAttribute("onselectstart");
 
         this.node.dispatchEvent(new CustomEvent("draggablepoint-dragend", {
             bubbles: true,

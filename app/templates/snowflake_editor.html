@@ -59,23 +59,23 @@
             <clipPath id="masksContainer"></clipPath>
             <symbol id="flakeraw">
                 <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
-                <path d="M 134.06 450 L 365 50 L 365 450 Z"/>
+                <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
             </symbol>   
             <symbol id="flakeangle">
                 <use href="#flakeraw" fill="white" stroke-width="2" stroke="white"/>
                 <use clip-path="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="6" stroke="black"/>
             </symbol>
-            <symbol id="flakeshape" viewbox="-100 -350 1000 850">
+            <symbol id="flakeshape" viewbox="-230 -350 1000 850">
                 <rect x="0" y="0" width="2000" height="2000" fill="black"/>
                 <g id="left">
-                    <use href="#flakeangle" transform="rotate(0, 365 50)"/>
-                    <use href="#flakeangle" transform="rotate(60, 365 50)"/>
-                    <use href="#flakeangle" transform="rotate(120, 365 50)"/>
-                    <use href="#flakeangle" transform="rotate(180, 365 50)"/>
-                    <use href="#flakeangle" transform="rotate(240, 365 50)"/>
-                    <use href="#flakeangle" transform="rotate(300, 365 50)"/>
+                    <use href="#flakeangle" transform="rotate(0, 265 50)"/>
+                    <use href="#flakeangle" transform="rotate(60, 265 50)"/>
+                    <use href="#flakeangle" transform="rotate(120, 265 50)"/>
+                    <use href="#flakeangle" transform="rotate(180, 265 50)"/>
+                    <use href="#flakeangle" transform="rotate(240, 265 50)"/>
+                    <use href="#flakeangle" transform="rotate(300, 265 50)"/>
                 </g>
-                <use href="#left" transform="scale(-1, 1)" x="-730">
+                <use href="#left" transform="scale(-1, 1)" x="-530">
             </symbol>
             <mask id="flakeMask">
                 <use href="#flakeshape"/>
@@ -93,12 +93,12 @@
             </g>
             <rect x="0" y="0" width="500" height="500" fill="#7373ff" mask="url(#flakeMask)"/>
         </svg>
-        <svg id="tools">
+        <svg id="tools" width="300">
             <g filter="url(#blur)">
-                <rect x="0" y="0" width="500" height="500" fill="grey" 
+                <rect x="0" y="0" width="300" height="500" fill="grey" 
                     mask="url(#flakeangleMask)" transform="translate(5, 5)"/>
             </g>
-            <rect x="0" y="0" width="500" height="500" fill="#7373ff" mask="url(#flakeangleMask)"/>
+            <rect x="0" y="0" width="300" height="500" fill="#7373ff" mask="url(#flakeangleMask)"/>
         </svg>
     </div>
     <div id="toolsBox">
