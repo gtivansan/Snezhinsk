@@ -76,6 +76,9 @@ function activateLayer(id) {
         activeLayer.classList.remove("layer-active");
         document.querySelector(`#${activeToolName}`).classList.remove("tool-active");
     }
+    if (tools[activeLayerId].action) {
+        document.querySelector(`#${activeToolName} .${tools[activeLayerId].action}`).classList.remove("active");
+    }
     let newActiveLayer = document.getElementById("layer_" + id)
     newActiveLayer.classList.add("layer-active");
     if (tools[activeLayerId]) {tools[activeLayerId].deactivate();}
@@ -84,6 +87,9 @@ function activateLayer(id) {
     activeToolName = tools[activeLayerId].name;
     activeTool = toolDict[activeToolName];
     document.querySelector(`#${activeToolName}`).classList.add("tool-active");
+    if (tools[activeLayerId].action) {
+        document.querySelector(`#${activeToolName} .${tools[activeLayerId].action}`).classList.add("active");
+    }
 }
 
 function deleteLayer(id) {

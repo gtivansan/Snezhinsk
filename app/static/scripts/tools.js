@@ -485,6 +485,7 @@ class ToolStencil {
 
         let _this = this;
         this.mousedownHandler = (event) => {
+            console.log(this.id)
             _this.addStencil({
                 x: event.pageX - getCoords(_this.canvas).x, 
                 y: event.pageY - getCoords(_this.canvas).y
@@ -613,11 +614,18 @@ class ToolStencil {
     deactivate() {
         this.isActive = false;
         this.shells.root.setAttribute("visibility", "hidden");
+        if (!this.isFinished) {
+            console.log("yyy", this.id)
+            this.canvas.removeEventListener("mousedown", this.mousedownHandler);
+        }
     }
 
     activate() {
         this.isActive = true;
         this.shells.root.setAttribute("visibility", "visible");
+        if (!this.isFinished) {
+            this.canvas.addEventListener("mousedown", this.mousedownHandler, {once: true});
+        }
     }
 
     delete() {
