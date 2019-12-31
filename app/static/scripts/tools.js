@@ -659,3 +659,32 @@ class StencilChristmasTree extends ToolStencil {
         this.name = "stencilChristmasTree";
     }
 }
+
+class StencilCircle extends ToolStencil {
+    constructor(id, toolCanvas, masksContainer) {
+        let stensil = `
+            <circle cx="0" cy="0" r="80"/>
+        `
+        super(id, toolCanvas, masksContainer, stensil);
+        this.name = "stencilCircle";
+    }
+}
+
+
+class StencilSnowflake extends ToolStencil {
+    constructor(id, toolCanvas, masksContainer) {
+        let stensil = `
+            <path d="M 11 80 L 11 60 L 26 68 L 33 55 L 12 42 L 12 13 L 35 27 L 35 53 L 50 54
+            L 50 37 L 68 47 L 74 33 L 59 24 L 73 14 L 67 3 L 43 15 L 19 1 L 43 -14 
+            L 65 -2 L 74 -15 L 60 -22 L 75 -33 L 69 -46 L 50 -36 L 50 -54 L 36 -54
+            L 36 -27 L 12 -13 L 12 -43 L 34 -55 L 26 -68 L 12 -60 L 11 -80
+
+            L -1 -80 L -2 -60 L -16 -68 L -24 -55 L -2 -43 L -2 -13 L -26 -27
+            L -26 -54 L -40 -54 L -40 -36 L -59 -46 L -65 -33 L -50 -22 L -64 -15 L -55 -2
+            L -33 -14 L -9 1 L -33 15 L -57 3 L -63 14 L -49 24 L -64 33 L -58 47 L -40 37
+            L -40 54 L -25 53 L -25 27 L -2 13 L -2 42 L -23 55 L -16 68 L -1 60 L -1 80 Z">
+        `
+        super(id, toolCanvas, masksContainer, stensil);
+        this.name = "stencilSnowflake";
+    }
+}

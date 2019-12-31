@@ -14,7 +14,9 @@ let toolDict = {
     "toolChain": ToolChain,
     "toolBezier": ToolBezier,
     "stencilStar": StencilStar,
-    "stencilChristmasTree": StencilChristmasTree
+    "stencilChristmasTree": StencilChristmasTree,
+    "stencilCircle": StencilCircle,
+    "stencilSnowflake": StencilSnowflake
 }
 
 let tools = {};
