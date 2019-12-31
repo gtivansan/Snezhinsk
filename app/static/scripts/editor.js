@@ -10,6 +10,13 @@ let readyPopupWindow = document.getElementById("readyPopupWindow");
 let readyPopupBack = document.getElementById("readyPopupBack");
 let inputSignature = document.getElementById("inputSignature");
 
+let toolDict = {
+    "toolChain": ToolChain,
+    "toolBezier": ToolBezier,
+    "stencilStar": StencilStar,
+    "stencilChristmasTree": StencilChristmasTree
+}
+
 let tools = {};
 let activeLayerId = 0;
 let activeTool = ToolChain;
@@ -32,7 +39,13 @@ function layerOnclick(id, event) {
     }
 }
 
-function addLayer() {  
+function addLayer() {
+    if (tools[activeLayerId] && tools[activeLayerId].action) {
+        document.querySelector(`#${activeToolName} .${tools[activeLayerId].action}`).classList.remove("active");
+    }
+    if (tools[activeLayerId]) {
+        tools[activeLayerId].deactivate();
+    }
     let layer = document.createElement("div");
     layer.setAttribute("class", "layer");
     layer.setAttribute("id", "layer_" + toolsCounter);
@@ -59,12 +72,18 @@ function addLayer() {
 
 function activateLayer(id) {
     let activeLayer = document.getElementById("layer_" + activeLayerId);
-    if (activeLayer) {activeLayer.classList.remove("layer-active");}
+    if (activeLayer) {
+        activeLayer.classList.remove("layer-active");
+        document.querySelector(`#${activeToolName}`).classList.remove("tool-active");
+    }
     let newActiveLayer = document.getElementById("layer_" + id)
     newActiveLayer.classList.add("layer-active");
     if (tools[activeLayerId]) {tools[activeLayerId].deactivate();}
     activeLayerId = id;
     tools[activeLayerId].activate();
+    activeToolName = tools[activeLayerId].name;
+    activeTool = toolDict[activeToolName];
+    document.querySelector(`#${activeToolName}`).classList.add("tool-active");
 }
 
 function deleteLayer(id) {
@@ -196,12 +215,10 @@ function submitError() {
 }
 
 function makeActiveTool(toolName) {
-    let toolDict = {
-        "toolChain": ToolChain,
-        "toolBezier": ToolBezier,
-        "stencilStar": StencilStar
-    }
     let tool = toolDict[toolName];
+    if (tools[activeLayerId].action) {
+        document.querySelector(`#${activeToolName} .${tools[activeLayerId].action}`).classList.remove("active");
+    }
     let toolElem = document.getElementById(activeToolName);
     toolElem.classList.remove("tool-active");
     activeTool = tool;
@@ -216,6 +233,9 @@ function makeActiveTool(toolName) {
         tools[activeLayerId].delete();
         delete tools[activeLayerId];
         tools[activeLayerId] = new tool(activeLayerId, toolsCanvas, masksContainer)
+    }
+    if (tools[activeLayerId].action) {
+        document.querySelector(`#${activeToolName} .${tools[activeLayerId].action}`).classList.add("active");
     }
 }
 

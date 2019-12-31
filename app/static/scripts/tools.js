@@ -160,6 +160,7 @@ class DraggablePoint {
 
 class ToolChain {
     constructor(id, toolCanvas, masksContainer) {
+        this.name = "toolChain"
         this.canvas = toolCanvas;
         this.masksContainer = masksContainer;
         this.id = id;
@@ -284,6 +285,7 @@ class ToolChain {
 
 class ToolBezier {
     constructor(id, toolCanvas, masksContainer) {
+        this.name="toolBezier";
         this.canvas = toolCanvas;
         this.masksContainer = masksContainer;
         this.id = id;
@@ -491,7 +493,8 @@ class ToolStencil {
         }
         this.canvas.addEventListener("mousedown", this.mousedownHandler, {once: true});
 
-        this.canvas.addEventListener("mousedown", (event) => this.mousedown(this, event));
+        this.handler = (event) => this.mousedown(this, event)
+        this.canvas.addEventListener("mousedown", this.handler);
     }
 
     mousedown(_this, event) {
@@ -618,25 +621,33 @@ class ToolStencil {
     }
 
     delete() {
-        this.masksContainer.removeChild(this.elemTranslate);
+        if (this.isFinished) {
+            this.masksContainer.removeChild(this.elemTranslate);
+        }
         this.canvas.removeChild(this.shells.root);
+        this.canvas.removeEventListener("mousedown", this.mousedownHandler);
+        this.canvas.removeEventListener("mousedown", this.handler);
     }
 }
 
 class StencilStar extends ToolStencil {
     constructor(id, toolCanvas, masksContainer) {
+        console.log("KEK");
         let stensil = `
             <path d="M -80 0 L -20 20 L 0 80 L 20 20 L 80 0 L 20 -20 L 0 -80 L -20 -20 Z"/>
         `
-        super(id, toolCanvas, masksContainer, stensil)
+        super(id, toolCanvas, masksContainer, stensil);
+        this.name = "stencilStar";
     }
 }
 
 class StencilChristmasTree extends ToolStencil {
     constructor(id, toolCanvas, masksContainer) {
         let stensil = `
-            <path d="M -80 0 L -20 20 L 0 80 L 20 20 L 80 0 L 20 -20 L 0 -80 L -20 -20 Z"/>
+            <path d="M 5 54 L 5 40 L 40 40 L 14 18 L 28 18 L 14 -2 L 20 -2 L 0 -48 
+                    L -20 -2 L -14 -2 L -28 18 L -14 18 L -40 40 L -5 40 L -5 54 Z "/>
         `
-        super(id, toolCanvas, masksContainer, stensil)
+        super(id, toolCanvas, masksContainer, stensil);
+        this.name = "stencilChristmasTree";
     }
 }

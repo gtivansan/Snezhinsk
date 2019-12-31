@@ -158,6 +158,10 @@
                 <g id="star">
                     <path d="M -80 0 L -20 20 L 0 80 L 20 20 L 80 0 L 20 -20 L 0 -80 L -20 -20 Z"/>
                 </g>
+                <g id="christmasTree">
+                    <path d="M 5 54 L 5 40 L 40 40 L 14 18 L 28 18 L 14 -2 L 20 -2 L 0 -48 
+                    L -20 -2 L -14 -2 L -28 18 L -14 18 L -40 40 L -5 40 L -5 54 Z "/>
+                </g> 
                 <g id="translate">
                     <rect x="-70" y="-70" width="140" height="140" 
                         stroke="black" stroke-width="1" rx="20" ry="20"/>
@@ -208,9 +212,34 @@
                         </div>
                     </div>
                 </button>   
-                <button class="tool">
-                    <p class="in-work">В работе</p>
-                </button>
+                <button class="tool stencil" id="stencilChristmasTree">
+                    <div class="stencil-not-active" onclick="makeActiveTool('stencilChristmasTree');">
+                        <svg viewbox="-100 -100 200 200">
+                            <use href="#christmasTree" fill="white" stroke="black" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="stencil-active">
+                        <div class="stencil-flex">
+                            <svg viewbox="-100 -100 200 200">
+                                <use href="#christmasTree" fill="white" stroke="black" stroke-width="1"/>
+                            </svg>
+                            <svg viewbox="-100 -100 200 200" class="action-icon translate">
+                                <use href="#translate" stroke="black" stroke-width="1" 
+                                    onclick="changeAction('translate')"/>
+                            </svg>
+                        </div>
+                        <div class="stencil-flex">
+                            <svg viewbox="-100 -100 200 200" class="action-icon rotate">
+                                <use href="#rotate" stroke="black" stroke-width="1"
+                                    onclick="changeAction('rotate')"/>
+                            </svg>
+                            <svg viewbox="-100 -100 200 200" class="action-icon scale">
+                                <use href="#scale" stroke="black" stroke-width="1"
+                                    onclick="changeAction('scale')"/>
+                            </svg>
+                        </div>
+                    </div>
+                </button> 
                 <button class="tool">
                     <p class="in-work">В работе</p>
                 </button>
