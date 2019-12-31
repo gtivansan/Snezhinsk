@@ -200,6 +200,7 @@ button.popup-close:active {
     border-radius: 10px;
     background: white;
     padding: 0;
+    background-position: center!important;
 }
 
 .tool-active .tool-name {
@@ -335,6 +336,10 @@ button.popup-close:active {
         height: 120px;
     }
 
+    .tool-name {
+        font-size: 22px;
+    }
+
     .in-work {
         font-size: 22px;
         margin-top: 10px;
@@ -342,6 +347,14 @@ button.popup-close:active {
 
     body {
         background: url("background2.jpg")
+    }
+
+    #toolChain:hover {
+        background-image: url(toolChain2.gif)!important;
+    }
+
+    #toolBezier:hover {
+        background-image: url(toolBezier2.gif)!important;
     }
 }
 
@@ -357,6 +370,10 @@ button.popup-close:active {
         margin: 5px;
     }
 
+    .tool-name {
+        font-size: 17px;
+    }
+
     .in-work {
         font-size: 17px;
         margin-top: 5px;
@@ -368,6 +385,14 @@ button.popup-close:active {
 
     body {
         background: url("background3.jpg")
+    }
+
+    #toolChain:hover {
+        background-image: url(toolChain2.gif)!important;
+    }
+
+    #toolBezier:hover {
+        background-image: url(toolBezier2.gif)!important;
     }
 
     #layersBar .layer {
