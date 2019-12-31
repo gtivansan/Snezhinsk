@@ -55,14 +55,14 @@
         </div>
     </div>
     <svg viewBox="0 0 500 500" width="0" height="0">
-        <clipPath id="masksContainer"></clipPath>
+        <mask id="masksContainer" fill="white"></mask>
         <symbol id="flakeraw">
             <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
             <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
         </symbol>   
         <symbol id="flakeangle">
             <use href="#flakeraw" fill="white" stroke-width="2" stroke="white"/>
-            <use clip-path="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="6" stroke="black"/>
+            <use mask="url(#masksContainer)" href="#flakeraw" fill="black" stroke-width="6" stroke="black"/>
         </symbol>
         <symbol id="flakeshape" viewbox="-230 -350 1000 850">
             <rect x="0" y="0" width="2000" height="2000" fill="black"/>
@@ -96,7 +96,7 @@
             </symbol>   
             <symbol id="_flakeangle">
                 <use href="#_flakeraw" fill="white" stroke-width="2" stroke="white"/>
-                <use clip-path="url(#masksContainer)" href="#_flakeraw" fill="black" stroke-width="6" stroke="black"/>
+                <use mask="url(#masksContainer)" href="#_flakeraw" fill="black" stroke-width="6" stroke="black"/>
             </symbol>
             <symbol id="_flakeshape" viewbox="-230 -350 1000 850">
                 <rect x="0" y="0" width="2000" height="2000" fill="black"/>
@@ -145,29 +145,68 @@
             </div>
         </div>
         <div id="toolsBar">
-            <h1>Инструменты</h1>
-            <div class="tools-group">
-                <button class="tool tool-active" id="toolChain" onclick="makeActiveTool('toolChain');">
-                    <div class="tool-name">
-                        <span>Ломаная</span>
-                    </div>
-                </button>
-                <button class="tool" id="toolBezier" onclick="makeActiveTool('toolBezier');">
-                    <div class="tool-name">
-                        <span>Кривая Безье</span>
-                    </div>
-                </button>
-                <button class="tool">
-                    <p class="in-work">В работе</p>
-                </button>
-                <button class="tool">
-                    <p class="in-work">В работе</p>
-                </button>
-            </div>
             <h1>Трафареты</h1>
+            <svg width="0" height="0">
+                <marker id="startarrow" markerWidth="10" markerHeight="7" 
+                refX="10" refY="3.5" orient="auto">
+                  <polygon points="10 0, 10 7, 0 3.5" />
+                </marker>
+                <marker id="endarrow" markerWidth="10" markerHeight="7" 
+                refX="0" refY="3.5" orient="auto" markerUnits="strokeWidth">
+                    <polygon points="0 0, 10 3.5, 0 7" />
+                </marker>
+                <g id="star">
+                    <path d="M -80 0 L -20 20 L 0 80 L 20 20 L 80 0 L 20 -20 L 0 -80 L -20 -20 Z"/>
+                </g>
+                <g id="translate">
+                    <rect x="-70" y="-70" width="140" height="140" 
+                        stroke="black" stroke-width="1" rx="20" ry="20"/>
+                    <line x1="0" x2="0" y1="-30" y2="30" stroke="#000" stroke-width="3" 
+                        marker-end="url(#endarrow)" marker-start="url(#startarrow)"/>
+                    <line x1="-30" x2="30" y1="0" y2="0" stroke="#000" stroke-width="3" 
+                        marker-end="url(#endarrow)" marker-start="url(#startarrow)"/>
+                </g>
+                <g id="rotate">
+                    <rect x="-70" y="-70" width="140" height="140" 
+                        stroke="black" stroke-width="1" rx="20" ry="20"/>
+                    <path d="M -30 0 A 30 30, 0, 1, 0, 0 -30" stroke="black" stroke-width="3"
+                        marker-end="url(#endarrow)" marker-start="url(#startarrow)"/>
+                </g>
+                <g id="scale">
+                    <rect x="-70" y="-70" width="140" height="140" 
+                        stroke="black" stroke-width="1" rx="20" ry="20"/>
+                    <line x1="-30" x2="30" y1="30" y2="-30" stroke="#000" stroke-width="3" 
+                        marker-end="url(#endarrow)" marker-start="url(#startarrow)"/>
+                </g>
+            </svg>
             <div class="tools-group">
-                <button class="tool">
-                    <p class="in-work">В работе</p>
+                <button class="tool stencil" id="stencilStar">
+                    <div class="stencil-not-active" onclick="makeActiveTool('stencilStar');">
+                        <svg viewbox="-100 -100 200 200">
+                            <use href="#star" fill="white" stroke="black" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="stencil-active">
+                        <div class="stencil-flex">
+                            <svg viewbox="-100 -100 200 200">
+                                <use href="#star" fill="white" stroke="black" stroke-width="1"/>
+                            </svg>
+                            <svg viewbox="-100 -100 200 200" class="action-icon translate">
+                                <use href="#translate" stroke="black" stroke-width="1" 
+                                    onclick="changeAction('translate')"/>
+                            </svg>
+                        </div>
+                        <div class="stencil-flex">
+                            <svg viewbox="-100 -100 200 200" class="action-icon rotate">
+                                <use href="#rotate" stroke="black" stroke-width="1"
+                                    onclick="changeAction('rotate')"/>
+                            </svg>
+                            <svg viewbox="-100 -100 200 200" class="action-icon scale">
+                                <use href="#scale" stroke="black" stroke-width="1"
+                                    onclick="changeAction('scale')"/>
+                            </svg>
+                        </div>
+                    </div>
                 </button>   
                 <button class="tool">
                     <p class="in-work">В работе</p>
@@ -177,6 +216,20 @@
                 </button>
                 <button class="tool">
                     <p class="in-work">В работе</p>
+                </button>
+            </div>
+            <h1>Инструменты</h1>
+            <div class="tools-group">
+                <button class="tool tool-active" id="toolChain" onclick="makeActiveTool('toolChain');">
+                    <div class="tool-name">
+                        <span>Ломаная</span>
+                    </div>
+                    </img>
+                </button>
+                <button class="tool" id="toolBezier" onclick="makeActiveTool('toolBezier');">
+                    <div class="tool-name">
+                        <span>Кривая Безье</span>
+                    </div>
                 </button>
             </div>
         </div>

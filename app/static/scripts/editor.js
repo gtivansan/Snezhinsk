@@ -198,7 +198,8 @@ function submitError() {
 function makeActiveTool(toolName) {
     let toolDict = {
         "toolChain": ToolChain,
-        "toolBezier": ToolBezier
+        "toolBezier": ToolBezier,
+        "stencilStar": StencilStar
     }
     let tool = toolDict[toolName];
     let toolElem = document.getElementById(activeToolName);
@@ -216,4 +217,13 @@ function makeActiveTool(toolName) {
         delete tools[activeLayerId];
         tools[activeLayerId] = new tool(activeLayerId, toolsCanvas, masksContainer)
     }
+}
+
+function changeAction(action) {
+    let tool = tools[activeLayerId];
+    if (tool.action) {
+        document.querySelector(`#${activeToolName} .${tool.action}`).classList.remove("active");
+    }
+    tools[activeLayerId].changeAction(action);
+    document.querySelector(`#${activeToolName} .${tool.action}`).classList.add("active");
 }

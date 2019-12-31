@@ -219,6 +219,36 @@ button.popup-close:active {
     background-image: url(toolBezier.gif)!important;
 }
 
+.stencil:not(.tool-active) .stencil-active,
+.stencil.tool-active .stencil-not-active {
+    display: none;
+}
+
+.stencil-active {
+    display: flex;
+    flex-direction: column;
+}
+
+.stencil-active svg {
+    flex-grow: 1;
+}
+
+.action-icon {
+    fill: white;
+}
+
+.action-icon.active {
+    fill: #7777fe!important;
+}
+
+.action-icon:hover {
+    fill: #ccccff;
+}
+
+.stencil-flex {
+    display: flex;
+}
+
 #toolsBar .tool:hover {
     background: #5454ef;
     background-repeat: no-repeat; 

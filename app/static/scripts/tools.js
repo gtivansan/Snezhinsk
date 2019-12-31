@@ -53,6 +53,22 @@ function complexAdd(a, b) {
     };
 }
 
+function complexNorm(a) {
+    return a.x * a.x + a.y * a.y;
+}
+
+function complexModule(a) {
+    return Math.pow(complexNorm(a), 0.5);
+}
+
+function complexAngle(a) {
+    let ang = Math.acos(a.x / complexModule(a));
+    if (a.y < 0) {
+        ang = 2 * Math.PI - ang;
+    }
+    return ang;
+}
+
 function complexDiv(a, b) {
     let bNorm = (b.x * b.x + b.y * b.y);
     let _b = {
@@ -445,5 +461,182 @@ class ToolBezier {
         this.canvas.removeEventListener("mousedown", this.mousedownHandler);
         if (this.pathElem) {this.masksContainer.removeChild(this.pathElem);}
         this.canvas.removeChild(this.shells.root);
+    }
+}
+
+class ToolStencil {
+    constructor(id, toolCanvas, masksContainer, stencil) {
+        this.canvas = toolCanvas;
+        this.masksContainer = masksContainer;
+        this.id = id;
+        this.stencil = stencil;
+
+        this.isActive = true;
+        this.isFinished = false;
+        this.action = "";
+        this.translate = {x:0, y:0};
+        this.scale = 1;
+        this.rotate = 0;
+
+        this.shells = {};
+        this.shells.root = addElement(this.canvas, "g", {id: `root_${this.id}`});
+
+        let _this = this;
+        this.mousedownHandler = (event) => {
+            _this.addStencil({
+                x: event.pageX - getCoords(_this.canvas).x, 
+                y: event.pageY - getCoords(_this.canvas).y
+            });
+            this.isFinished = true;
+        }
+        this.canvas.addEventListener("mousedown", this.mousedownHandler, {once: true});
+
+        this.canvas.addEventListener("mousedown", (event) => this.mousedown(this, event));
+    }
+
+    mousedown(_this, event) {
+        _this.startMousePosition = {
+            x: event.pageX - getCoords(_this.canvas).x, 
+            y: event.pageY - getCoords(_this.canvas).y
+        }; 
+        _this.startTranslate = _this.translate;
+        _this.startRotate = _this.rotate;
+        _this.startScale = _this.scale;
+
+        document.body.setAttribute("onselectstart", "return false");
+        document.body.style["user-select"]="none";
+
+        let mousemoveHandler =  (event) => _this.mousemove(_this, event);
+        document.addEventListener("mousemove", mousemoveHandler);        
+        document.addEventListener("mouseup", (event) => _this.mouseup(_this, event, mousemoveHandler), {once: true});
+    }
+
+    mouseup(_this, event, mousemoveHandler) {
+        document.removeEventListener("mousemove", mousemoveHandler);
+        document.body.removeAttribute("onselectstart");
+        document.body.style["user-select"]="";
+
+    }
+
+    mousemove(_this, event) {
+        let mousePosition = {
+            x: event.pageX - getCoords(_this.canvas).x,
+            y: event.pageY - getCoords(_this.canvas).y
+        }
+        let mouseShift = complexSub(mousePosition, this.startMousePosition);
+
+        if (this.action == "translate") {
+            this.actionTranslate(mouseShift);
+        }
+        if (this.action == "rotate") {
+            let angle = complexAngle(complexDiv(complexSub(mousePosition, this.translate),
+                complexSub(this.startMousePosition, this.translate)));
+            this.actionRotate(angle * 180 / Math.PI);
+        }
+        if (this.action == "scale") {
+            let k = complexModule(complexSub(mousePosition, this.translate)) / 
+                complexModule(complexSub(this.startMousePosition, this.translate));
+            this.actionScale(k);
+        }
+    }
+
+    addStencil(position) {
+        this.elemTranslate = addElement(this.masksContainer, "g");
+        this.elemRotate = addElement(this.elemTranslate, "g");
+        this.elemScale = addElement(this.elemRotate, "g");
+        this.elemScale.innerHTML = this.stencil;
+
+        this.elemVisTranslate = addElement(this.shells.root, "g");
+        this.elemVisRotate = addElement(this.elemVisTranslate, "g");
+        this.elemVisScale = addElement(this.elemVisRotate, "g");
+        this.elemVisScale.innerHTML = this.stencil;
+        this.elemVisTranslate.setAttribute("fill", "transparent");
+        this.elemVisTranslate.setAttribute("stroke", "grey");
+        this.elemVisTranslate.setAttribute("stroke-width", 1);
+        this.elemVisTranslate.setAttribute("stroke-dasharray", 4);
+
+        this.doTranslate(position);
+    }
+
+    changeAction(action) {
+        this.action = action;
+    }
+
+    doTranslate(vector) {
+        let newTranslate = {
+            x: this.translate.x + vector.x,
+            y: this.translate.y + vector.y
+        }
+        this.translate = newTranslate;
+        this.elemTranslate.setAttribute("transform", `translate(${newTranslate.x}, ${newTranslate.y})`);
+        this.elemVisTranslate.setAttribute("transform", `translate(${newTranslate.x}, ${newTranslate.y})`);
+    }
+
+    doRotate(angle) {
+        let newRotate = angle + this.rotate;
+        this.rotate = newRotate;
+        this.elemRotate.setAttribute("transform", `rotate(${newRotate})`);
+        this.elemVisRotate.setAttribute("transform", `rotate(${newRotate})`);
+    }
+
+    doScale(k) {
+        let newScale = k * this.scale;
+        this.scale = newScale;
+        this.elemScale.setAttribute("transform", `scale(${newScale})`);
+        this.elemVisScale.setAttribute("transform", `scale(${newScale})`);
+    }
+
+    actionTranslate(mouseShift) {
+        if (this.isActive) {
+            this.translate = this.startTranslate;
+            this.doTranslate(mouseShift);
+        }
+    }
+
+    actionRotate(angle) {
+        if (this.isActive) {
+            this.rotate = this.startRotate;
+            this.doRotate(angle);
+        }
+    }
+
+    actionScale(k) {
+        if (this.isActive) {
+            this.scale = this.startScale;
+            this.doScale(k);
+        }
+    }
+
+    deactivate() {
+        this.isActive = false;
+        this.shells.root.setAttribute("visibility", "hidden");
+    }
+
+    activate() {
+        this.isActive = true;
+        this.shells.root.setAttribute("visibility", "visible");
+    }
+
+    delete() {
+        this.masksContainer.removeChild(this.elemTranslate);
+        this.canvas.removeChild(this.shells.root);
+    }
+}
+
+class StencilStar extends ToolStencil {
+    constructor(id, toolCanvas, masksContainer) {
+        let stensil = `
+            <path d="M -80 0 L -20 20 L 0 80 L 20 20 L 80 0 L 20 -20 L 0 -80 L -20 -20 Z"/>
+        `
+        super(id, toolCanvas, masksContainer, stensil)
+    }
+}
+
+class StencilChristmasTree extends ToolStencil {
+    constructor(id, toolCanvas, masksContainer) {
+        let stensil = `
+            <path d="M -80 0 L -20 20 L 0 80 L 20 20 L 80 0 L 20 -20 L 0 -80 L -20 -20 Z"/>
+        `
+        super(id, toolCanvas, masksContainer, stensil)
     }
 }
