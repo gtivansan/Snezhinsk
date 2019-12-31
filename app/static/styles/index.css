@@ -14,11 +14,12 @@ p {
     height: 100%;
 }
 
-.greeting {
+#greeting {
 	position: fixed;
 	width: 800px;
 	left: 0;
 	right: 0;
+    top: 0;
 	margin: auto;
 	font-family: 'Comfortaa';
 	font-size: 22px;
@@ -28,6 +29,16 @@ p {
     padding-left: 10px;
     padding-right: 10px;
     z-index: 100;
+}
+
+#switchGreeting {
+    border: 0;
+    background: transparent;
+    width: 100%;
+}
+
+#switchGreeting:focus {
+    outline: none;
 }
 
 .button {

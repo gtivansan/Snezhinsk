@@ -9,7 +9,15 @@
     <title>Снежинск</title>
 </head>
 <body>
-    <div class="greeting">
+    <svg width="0" height="0" viewbox="0 0 50 50">
+        <symbol id="downTriangle">
+            <polygon points="0,0 25,43.3 50,0"/>
+        </symbol>
+        <symbol id="upTriangle">
+            <polygon points="0,50 25,6.7 50,50"/>
+        </symbol>
+    </svg>
+    <div id="greeting">
         <p style="text-align: center;">
             Привет!
         </p>
@@ -20,9 +28,10 @@
             две или три. Чем больше, тем лучше будет наш чудесный новогодний 
             снегопад!
         </p>
-        <p style="text-align: center;">
+        <p style="text-align: center; margin-bottom: 0;">
             C Новым Годом!
         </p>
+        <button id="switchGreeting"><svg width="10" height="10" viewbox="0 0 50 50"><use href="#upTriangle"></svg></button>
     </div>
     <div id="canvas"></div>
 

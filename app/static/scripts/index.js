@@ -30,6 +30,16 @@ function linear(timeFraction) {
     return timeFraction;
 }
 
+function pow(timeFraction) {
+  return Math.pow(timeFraction, 5)
+}
+
+function makeEaseOut(timing) {
+    return function(timeFraction) {
+        return 1 - timing(1 - timeFraction);
+    }
+}
+
 async function getSnowflakesCount() {
     let response = await fetch("/getSnowflakesCount")
     return response.text()
@@ -112,10 +122,61 @@ async function main() {
 
     if (snowflakeCount >= 1) {
         setInterval(async function() {
-            id = getRandomInt(snowflakeCount - 1) + 1;
+            id = getRandomInt(snowflakeCount) + 1;
             snowflake = await getSnowflake(id);
             launchSnowflake(snowflake, counter);
             counter += 1;
         }, 3000)
     }
+}
+
+
+let greeting = document.getElementById("greeting");
+let switchGreetingButton = document.getElementById("switchGreeting");
+
+switchGreetingButton.addEventListener("click", hideGreeting, {once: true});
+
+function hideGreeting() {
+    let startHeight = greeting.getBoundingClientRect().height;
+    let endHeight = 20;
+    function draw(progress) {
+        greeting.style.top = -progress * (startHeight - endHeight) + "px";
+    }
+    animate({
+        timing: makeEaseOut(pow),
+        draw: draw,
+        duration: 1500,
+        then: () => {
+            switchGreetingButton.addEventListener("click", showGreeting, {once: true});
+            switchGreeting.innerHTML = `<svg width="10" height="10" viewbox="0 0 50 50"><use href="#downTriangle"></svg>`;
+        } 
+    })
+}
+
+function showGreeting() {
+    let startHeight = greeting.getBoundingClientRect().height;
+    let endHeight = 20;
+    function draw(progress) {
+        greeting.style.top = (progress - 1) * (startHeight - endHeight) + "px";
+    }
+    animate({
+        timing: makeEaseOut(pow),
+        draw: draw,
+        duration: 1500,
+        then: () => {
+            switchGreetingButton.addEventListener("click", hideGreeting, {once: true})
+            switchGreeting.innerHTML = `<svg width="10" height="10" viewbox="0 0 50 50"><use href="#upTriangle"></svg>`;
+        }
+    })
+}
+
+switchGreetingButton.addEventListener("mouseover", greetingHover);
+switchGreetingButton.addEventListener("mouseout", greetingNotHover);
+
+function greetingHover() {
+    document.querySelector("#switchGreeting svg").style.fill = "#664cff";
+}
+
+function greetingNotHover() {
+    document.querySelector("#switchGreeting svg").style.fill = "black";
 }
