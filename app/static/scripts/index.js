@@ -99,7 +99,7 @@ function launchSnowflake(snowflake, id) {
     canvas.appendChild(svg);
 
     function draw(progress) {
-        svg.style.top = `${progress * canvas.getBoundingClientRect().height}px`;
+        svg.style.top = `${progress * (canvas.getBoundingClientRect().height + maxSize) - maxSize}px`;
         svg.style.left = `${left}px`;
         svg.setAttribute("transform", `rotate(${angle * progress})`)
     }
