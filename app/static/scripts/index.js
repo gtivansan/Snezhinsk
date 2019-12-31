@@ -59,23 +59,23 @@ function launchSnowflake(snowflake, id) {
     let groupInnerHTML = `
         <clipPath id="${id}_masksContainer">${mask}</clipPath>
         <symbol id="${id}_flakeraw">
-            <path d="M 134.06 450 L 365 50 L 365 450 Z"/>
+            <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
         </symbol>   
         <symbol id="${id}_flakeangle">
             <use href="#${id}_flakeraw" fill="white" stroke-width="2" stroke="white"/>
             <use clip-path="url(#${id}_masksContainer)" href="#${id}_flakeraw" fill="black" stroke-width="15" stroke="black"/>
         </symbol>
-        <symbol id="${id}_flakeshape" viewbox="-100 -350 1000 850">
+        <symbol id="${id}_flakeshape" viewbox="-230 -350 1000 850">
             <rect x="-1000" y="-1000" width="3000" height="3000" fill="black"/>
             <g id="${id}_left">
-                <use href="#${id}_flakeangle" transform="rotate(0, 365 50)"/>
-                <use href="#${id}_flakeangle" transform="rotate(60, 365 50)"/>
-                <use href="#${id}_flakeangle" transform="rotate(120, 365 50)"/>
-                <use href="#${id}_flakeangle" transform="rotate(180, 365 50)"/>
-                <use href="#${id}_flakeangle" transform="rotate(240, 365 50)"/>
-                <use href="#${id}_flakeangle" transform="rotate(300, 365 50)"/>
+                <use href="#${id}_flakeangle" transform="rotate(0, 265 50)"/>
+                <use href="#${id}_flakeangle" transform="rotate(60, 265 50)"/>
+                <use href="#${id}_flakeangle" transform="rotate(120, 265 50)"/>
+                <use href="#${id}_flakeangle" transform="rotate(180, 265 50)"/>
+                <use href="#${id}_flakeangle" transform="rotate(240, 265 50)"/>
+                <use href="#${id}_flakeangle" transform="rotate(300, 265 50)"/>
             </g>
-            <use href="#${id}_left" transform="scale(-1, 1)" x="-730">
+            <use href="#${id}_left" transform="scale(-1, 1)" x="-530">
         </symbol>
         <mask id="${id}_flakeMask">
             <use href="#${id}_flakeshape"/>
@@ -99,7 +99,8 @@ function launchSnowflake(snowflake, id) {
     canvas.appendChild(svg);
 
     function draw(progress) {
-        svg.style.top = `${progress * (canvas.getBoundingClientRect().height + maxSize) - maxSize}px`;
+        svg.style.top = `${progress * (canvas.getBoundingClientRect().height + maxSize) - maxSize}px`;  
+
         svg.style.left = `${left}px`;
         svg.setAttribute("transform", `rotate(${angle * progress})`)
     }
