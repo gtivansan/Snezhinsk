@@ -12,6 +12,8 @@ let inputSignature = document.getElementById("inputSignature");
 
 let tools = {};
 let activeLayerId = 0;
+let activeTool = ToolChain;
+let activeToolName = "toolChain";
 let toolsCounter = 0;
 
 layersFooter.addEventListener("click", addLayer);
@@ -50,7 +52,7 @@ function addLayer() {
     let id = toolsCounter;
     layer.addEventListener("click", (event) => layerOnclick(id, event));
     layersFooter.before(layer);
-    tools[toolsCounter] = new ToolChain(toolsCounter, toolsCanvas, masksContainer);
+    tools[toolsCounter] = new activeTool(toolsCounter, toolsCanvas, masksContainer);
     activateLayer(toolsCounter);
     toolsCounter += 1;
 }
@@ -191,4 +193,27 @@ function submitSuccess() {
 function submitError() {
     hideReadyPopup();
     showErrorPopup();
+}
+
+function makeActiveTool(toolName) {
+    let toolDict = {
+        "toolChain": ToolChain,
+        "toolBezier": ToolBezier
+    }
+    let tool = toolDict[toolName];
+    let toolElem = document.getElementById(activeToolName);
+    toolElem.classList.remove("tool-active");
+    activeTool = tool;
+    activeToolName = toolName;
+    toolElem = document.getElementById(activeToolName);
+    toolElem.classList.add("tool-active");
+    if (!tools[activeLayerId]) {
+        addLayer()
+    } else if (tools[activeLayerId].isFinished) {
+        addLayer()
+    } else {
+        tools[activeLayerId].delete();
+        delete tools[activeLayerId];
+        tools[activeLayerId] = new tool(activeLayerId, toolsCanvas, masksContainer)
+    }
 }

@@ -90,8 +90,9 @@
     <div id="canvasContainer">
         <svg id="flake">
             <symbol id="_flakeraw">
-                <!-- <path d="M 134 450 L 367 48 L 367 450 Z"/> -->
                 <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
+
+                <!-- <path d="M 0 0 L 500 0 L 500 500 L 0 500 Z"/> -->
             </symbol>   
             <symbol id="_flakeangle">
                 <use href="#_flakeraw" fill="white" stroke-width="2" stroke="white"/>
@@ -131,6 +132,7 @@
                     mask="url(#_flakeangleMask)" transform="translate(5, 5)"/>
             </g>
             <rect x="0" y="0" width="300" height="500" fill="#7373ff" mask="url(#_flakeangleMask)"/>
+            <!-- <rect x="0" y="0" width="300" height="500" fill="#5454ef" mask="url(#_flakeangleMask)"/> -->
         </svg>
     </div>
     <div id="toolsBox">
@@ -145,33 +147,37 @@
         <div id="toolsBar">
             <h1>Инструменты</h1>
             <div class="tools-group">
-                <div class="tool">
+                <button class="tool tool-active" id="toolChain" onclick="makeActiveTool('toolChain');">
+                    <div class="tool-name">
+                        <span>Ломаная</span>
+                    </div>
+                </button>
+                <button class="tool" id="toolBezier" onclick="makeActiveTool('toolBezier');">
+                    <div class="tool-name">
+                        <span>Кривая Безье</span>
+                    </div>
+                </button>
+                <button class="tool">
                     <p class="in-work">В работе</p>
-                </div>     
-                <div class="tool">
+                </button>
+                <button class="tool">
                     <p class="in-work">В работе</p>
-                </div>
-                <div class="tool">
-                    <p class="in-work">В работе</p>
-                </div>
-                <div class="tool">
-                    <p class="in-work">В работе</p>
-                </div>
+                </button>
             </div>
             <h1>Трафареты</h1>
             <div class="tools-group">
-                <div class="tool">
+                <button class="tool">
                     <p class="in-work">В работе</p>
-                </div>     
-                <div class="tool">
+                </button>   
+                <button class="tool">
                     <p class="in-work">В работе</p>
-                </div>
-                <div class="tool">
+                </button>
+                <button class="tool">
                     <p class="in-work">В работе</p>
-                </div>
-                <div class="tool">
+                </button>
+                <button class="tool">
                     <p class="in-work">В работе</p>
-                </div>
+                </button>
             </div>
         </div>
     </div>

@@ -149,6 +149,7 @@ class ToolChain {
         this.id = id;
 
         this.isActive = true;
+        this.isFinished = false;
         this.r = 10;
         this.points = [];
 
@@ -181,7 +182,7 @@ class ToolChain {
 
     addPoint(position) {
         position = this.positionModifier()(position);
-        let point = new DraggablePoint(this.canvas, this.shells.points, position, {r: this.r}, {fill: "grey"})
+        let point = new DraggablePoint(this.canvas, this.shells.points, position, {r: this.r}, {fill: "#4e4e4e"})
         point.positionModifier = this.positionModifier();
 
         this.points.push(point);
@@ -220,6 +221,7 @@ class ToolChain {
                 (event) => setProperties(segment, {x1: event.detail.x, y1: event.detail.y}));
             _this.canvas.removeEventListener("mousedown", _this.mousedownHandler);
             _this.createMask();
+            _this.isFinished = true;
             _this.canvas.dispatchEvent(new CustomEvent("toolchain-end", {detail: {id: _this.id}}));
             // }
 
@@ -271,6 +273,7 @@ class ToolBezier {
         this.id = id;
 
         this.isActive = true;
+        this.isFinished = false;
         this.r = 10;
         this.cr = 6;
         this.points = [];
@@ -317,8 +320,8 @@ class ToolBezier {
                             y: (prePosition.y * 2 + position.y) / 3};
         let ctrlPositin2 = {x: (prePosition.x + position.x * 2) / 3,
                             y: (prePosition.y + position.y * 2) / 3};
-        let ctrlPoint1 = this.createPoint(ctrlPositin1, {r: this.cr}, {fill: "grey"});
-        let ctrlPoint2 = this.createPoint(ctrlPositin2, {r: this.cr}, {fill: "grey"});
+        let ctrlPoint1 = this.createPoint(ctrlPositin1, {r: this.cr}, {fill: "#4e4e4e"});
+        let ctrlPoint2 = this.createPoint(ctrlPositin2, {r: this.cr}, {fill: "#4e4e4e"});
         this.controlPoints.push(ctrlPoint1);
         this.controlPoints.push(ctrlPoint2);
         function pathStr(pp, cp1, cp2, p) {
@@ -376,7 +379,7 @@ class ToolBezier {
     }
 
     addPoint(position) {
-        let point = this.createPoint(position, {r: this.r}, {fill: "grey"});
+        let point = this.createPoint(position, {r: this.r}, {fill: "#4e4e4e"});
         this.points.push(point);
 
         if (this.points.length >= 2) {
@@ -393,6 +396,7 @@ class ToolBezier {
             _this.createPath(point, prePoint)
             _this.canvas.removeEventListener("mousedown", _this.mousedownHandler);
             _this.createMask();
+            _this.isFinished = true;
             _this.canvas.dispatchEvent(new CustomEvent("toolbezier-end", {detail: {id: _this.id}}));
             // }
 
