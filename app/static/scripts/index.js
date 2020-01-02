@@ -57,13 +57,13 @@ async function getSnowflake(id) {
 function launchSnowflake(snowflake, id) {
     let mask = snowflake.snowflake;
     let groupInnerHTML = `
-        <clipPath id="${id}_masksContainer">${mask}</clipPath>
+        <mask id="${id}_masksContainer" fill="white">${mask}</mask>
         <symbol id="${id}_flakeraw">
             <path d="M 34.06 450 L 265 50 L 265 450 Z"/>
         </symbol>   
         <symbol id="${id}_flakeangle">
             <use href="#${id}_flakeraw" fill="white" stroke-width="2" stroke="white"/>
-            <use clip-path="url(#${id}_masksContainer)" href="#${id}_flakeraw" fill="black" stroke-width="15" stroke="black"/>
+            <use mask="url(#${id}_masksContainer)" href="#${id}_flakeraw" fill="black" stroke-width="15" stroke="black"/>
         </symbol>
         <symbol id="${id}_flakeshape" viewbox="-230 -350 1000 850">
             <rect x="-1000" y="-1000" width="3000" height="3000" fill="black"/>
